@@ -1,0 +1,73 @@
+[
+    {
+        "date": "2024-04-30",
+        "breakfast": [
+            {
+                "name": "cereal",
+                "size": 1.0,
+                "unit": "cup"
+            },
+            {
+                "name": "milk whole",
+                "size": 125.0,
+                "unit": "g"
+            }
+        ],
+        "lunch": [
+            {
+                "name": "spicy lentil wrap",
+                "size": 2.0,
+                "unit": "unit"
+            }
+        ],
+        "dinner": [
+            {
+                "name": "mushroom",
+                "size": 76.0,
+                "unit": "g"
+            },
+            {
+                "name": "broccoli",
+                "size": 85.0,
+                "unit": "g"
+            },
+            {
+                "name": "chicken breast",
+                "size": 130.0,
+                "unit": "g"
+            },
+            {
+                "name": "olive oil",
+                "size": 2.0,
+                "unit": "tbs"
+            },
+            {
+                "name": "pita whole",
+                "size": 1.0,
+                "unit": "unit"
+            },
+            {
+                "name": "cheese swiss skim",
+                "size": 42.0,
+                "unit": "g"
+            }
+        ],
+        "night": [
+            {
+                "name": "greek yogurt fat free",
+                "size": 100.0,
+                "unit": "g"
+            },
+            {
+                "name": "banana",
+                "size": 150.0,
+                "unit": "g"
+            },
+            {
+                "name": "protein powder ascent whey",
+                "size": 1.5,
+                "unit": "scoop"
+            }
+        ]
+    }
+]
