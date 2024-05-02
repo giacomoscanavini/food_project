@@ -3,8 +3,8 @@ import numpy as np
 import re
 import json
 
-dictionary_path = "/mnt/c/Users/scana/Dropbox/food_dictionary.json"
-database_path = "/mnt/c/Users/scana/Dropbox/food_database.csv"
+dictionary_path = "/mnt/c/Users/scana/Dropbox/FoodProject/food_dictionary.json"
+database_path = "/mnt/c/Users/scana/Dropbox/FoodProject/food_database.csv"
 
 
 def load_food_dictionary(file_path=dictionary_path):
@@ -41,6 +41,9 @@ def extract_nutritional_values(df, text, food_dict, file_path=dictionary_path):
     }
 
     for entry in entries.keys():
+
+        # entry = entry.lower()
+
         if entry == "Name":
             name = input("Enter Food: ").lower()
             if name in np.array(df.Name):
@@ -83,6 +86,8 @@ def extract_nutritional_values(df, text, food_dict, file_path=dictionary_path):
     new_row = pd.DataFrame([entries])
     # Append to the existing DataFrame
     df = pd.concat([df, new_row], ignore_index=True)
+
+    save_df(df)
     return df
 
 
@@ -104,10 +109,29 @@ def get_food_category(food_name, food_dict, file_path):
 
 
 def find_values(entry, text):
-    pattern = rf"\b({entry})\s+(\d+(\.\d+)?)"
+    # Convert entire text to lowercase to simplify matching
+    text = text.lower()
+
+    # Dictionary to handle label variations
+    label_variations = {
+        "total fat": r"total fats?",
+        "saturated fat": r"saturated fats?",
+        "cholesterol": r"cholesterol",
+        "sodium": r"sodium",
+        "potassium": r"potassium",
+        "total carbohydrate": r"total (carbohydrate|carbs|carbo|carbohydrates)",
+        "dietary fiber": r"dietary fibers?",
+        "sugar": r"sugars?",  # Matches both 'sugar' and 'sugars'
+        "protein": r"proteins?",
+    }
+
+    # Use regex pattern from dictionary or use the entry itself if not found
+    regex_entry = label_variations.get(entry.lower(), entry.lower())
+    pattern = rf"\b{regex_entry}\s+([\d\.]+)"
     match = re.search(pattern, text)
+
     if match:
-        return float(match[2])
+        return float(match.group(1))
     else:
         return 0.0
 

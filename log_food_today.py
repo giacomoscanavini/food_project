@@ -23,10 +23,10 @@ def format_meal_data(meal_string):
 
 
 def add_daily_food(date, meal_data_string):
-    data = load_data("/mnt/c/Users/scana/Dropbox/food_log.json")
+    data = load_data("/mnt/c/Users/scana/Dropbox/FoodProject/food_log.json")
     meals = format_meal_data(meal_data_string)
     data.append({"date": date, **meals})
-    save_data(data, "/mnt/c/Users/scana/Dropbox/food_log.json")
+    save_data(data, "/mnt/c/Users/scana/Dropbox/FoodProject/food_log.json")
 
 
 def load_data(filepath):
