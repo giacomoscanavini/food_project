@@ -6,11 +6,10 @@ breakfast
 3 unit rice_cake_brown
 lunch
 1 unit egg
-0.5 unit tuna_can
+0.5 unit tuna_albacore_water
 25 g arugula
 1 unit pita_whole
 snack
-
-dinner
-
-night
+126 g strawberry
+170 g greek_yogurt_zero
+22.5 g almond_salted

@@ -4,7 +4,7 @@ breakfast
 55 g salmon_smoked
 1 unit egg_hard_boiled
 80 g milk_zero
-100 g gree_yogurt_zero
+100 g greek_yogurt_zero
 70 g blueberry
 lunch
 2 unit pita_whole
