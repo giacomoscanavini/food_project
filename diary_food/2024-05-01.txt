@@ -1,0 +1,26 @@
+2024-05-01
+breakfast
+68.0 g cereal_heritage_flakes
+128.0 g milk_whole
+lunch
+15.0 g carrot
+15.0 g lettuce
+130.0 g beef_korean_bbq
+10.0 g kimchi
+10.0 g mushroom
+2.0 tbs sauce_gochujang
+100.0 g rice_jasmine
+snack
+1.0 unit egg_hard_boiled
+150.0 g greek_yogurt_zero_vanilla
+dinner
+76.0 g mushroom
+85.0 g broccoli
+235.0 g octopus_costco
+1.0 tbs oil_olive
+70.0 g avocado
+1.0 unit pita_whole
+150.0 g cottage_cheese_skim
+night
+1.0 slice cheesecake
+1.0 glass wine_red
