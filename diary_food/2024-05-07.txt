@@ -13,3 +13,13 @@ snack
 126 g strawberry
 170 g greek_yogurt_zero
 22.5 g almond_salted
+dinner
+83 g rice_white
+132 g beef_ground_96_4
+0.6 unit egg
+13 g bread_crumbs
+1 unit pepper_green
+night
+1.5 scoop protein_powder_ascent_chocolate
+118 g greek_yogurt_zero
+52 g blueberry

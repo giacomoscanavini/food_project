@@ -19,5 +19,11 @@ dinner
 2 tbs sauce_baba_ganoush
 0.25 unit potato
 1 unit soda
-1 tbs oil_olive
+3 tbs oil_olive
+1 unit pita_white
 night
+0.29 unit egg_white
+0.11 cup sugar_white
+0.07 tbs vanilla_extract
+0.29 cup flour_almond
+9.07 g almond

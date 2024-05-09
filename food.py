@@ -3,6 +3,7 @@ import numpy as np
 import re
 import json
 import datetime
+from dateutil.relativedelta import relativedelta
 import os
 import matplotlib.pyplot as plt
 
@@ -11,7 +12,7 @@ database_path = "/mnt/c/Users/scana/Dropbox/FoodProject/food_database.csv"
 diary_path = "/mnt/c/Users/scana/Dropbox/FoodProject/diary_food/"
 
 
-def load_food_database(file_path=database_path):
+def load_food_database(file_path=None):
     df_food = pd.read_csv(file_path)
     # Convert numpy.float64('nan') to np.nan explicitly (redundant but safe for demonstration)
     for col in df_food.columns:
@@ -19,13 +20,11 @@ def load_food_database(file_path=database_path):
     return df_food
 
 
-def save_df(df, file_path=database_path):
+def save_df(df, file_path=None):
     df.to_csv(file_path, index=False)
 
 
-def generate_new_day(
-    date=None, path="/mnt/c/Users/scana/Dropbox/FoodProject/diary_food/"
-):
+def generate_new_day(date=None, path=None):
     """
     This function creates a new .txt file with the right template in the diary folder with the right template based on today's date
 
@@ -64,7 +63,7 @@ def generate_new_day(
 
 def find_food(df_food=None, food_name=None, exact=False):
     """
-    This function searches the food database to see if there is a match, if so it prints the database entry. This function doesn't reset the index of the filtered pandas.DataFrame
+    This function searches the food database to see if there is a match, if so it returns the database entry. This function doesn't reset the index of the filtered pandas.DataFrame
 
     Parameters:
         df_food (pd.DataFrame): Food database
@@ -85,7 +84,7 @@ def find_food(df_food=None, food_name=None, exact=False):
 # function that imports a diary entry, cretes a dataframe and ?
 def diary_entry_to_df(file_name):
     """
-    Parses food entries from a text file into a pandas DataFrame.
+    Parses food entries from a text file into a pandas.DataFrame.
 
     The text file is expected to have a date on the first line, followed by meal sections
     (e.g., breakfast, lunch, snack, dinner, night) and food entries under each section.
@@ -96,7 +95,11 @@ def diary_entry_to_df(file_name):
 
     Returns:
         pd.DataFrame: A DataFrame containing columns for Size, Unit, Name, and Meal.
+        str: Date of the diary entry
     """
+    # Extract date of diary entry
+    date = file_name.split('/')[-1].split('.txt')[0]
+
     # Initialize an empty list to hold the entries
     entries = []
 
@@ -127,17 +130,17 @@ def diary_entry_to_df(file_name):
 
     # Create a DataFrame from the list of entries with specified column names
     df_diary = pd.DataFrame(entries, columns=["Size", "Unit", "Name", "Meal"])
-    return df_diary
+    return df_diary, date
 
 
-def nutrients_to_df(df_diary, df_food):
+def nutrients_to_df(df_diary, df_food, verbose=True):
     """
     This function generates a pandas.DataFrame with all nutrients eaten given a starting pandas.DataFrame of food and quantity eaten
 
     Parameters:
         df_diary (pd.DataFrame): DataFrame with food eaten and quantities
         df_food (pd.DataFrame): Food database
-        file_name (str): The name of the text file to be parsed.
+        verbose (bool): Prints more information
 
     Returns:
         pd.DataFrame: DataFrame with all food eaten converted to nutrients and scaled according to eaten quantities
@@ -178,6 +181,9 @@ def nutrients_to_df(df_diary, df_food):
         "Scaling": None,
     }
 
+
+    track_ = [[],[],[],[], []]
+
     # Loop over eaten food as reported into the diary
     for i in range(df_diary.shape[0]):
         # Store eaten food info
@@ -185,6 +191,17 @@ def nutrients_to_df(df_diary, df_food):
         eaten_unit = str(df_diary.loc[i]["Unit"])
         eaten_name = str(df_diary.loc[i]["Name"])
         eaten_meal = str(df_diary.loc[i]["Meal"])
+
+        if eaten_meal == 'breakfast':
+            track_[0].append(eaten_name)
+        elif eaten_meal == 'lunch':
+            track_[1].append(eaten_name)
+        elif eaten_meal == 'snack':
+            track_[2].append(eaten_name)
+        elif eaten_meal == 'dinner':
+            track_[3].append(eaten_name)
+        else: 
+            track_[4].append(eaten_name)
 
         # print(eaten_size, eaten_unit, eaten_name, eaten_meal)
         # Find entry in food database
@@ -223,23 +240,56 @@ def nutrients_to_df(df_diary, df_food):
 
         # Append to the output database
         df_nutrients.loc[i] = dict_nutrients
+
+
+    if verbose:
+        print(f"Breakfast: {', '.join([x for x in track_[0]])}")
+        print(f"Lunch: {', '.join([x for x in track_[1]])}")
+        print(f"Snack: {', '.join([x for x in track_[2]])}")
+        print(f"Dinner: {', '.join([x for x in track_[3]])}")
+        print(f"Night: {', '.join([x for x in track_[4]])}")
+
     return df_nutrients
 
 
 # duncion that plots averages of main nutrients
-def sum_up_day(df_nutrients):
+def sum_up_day(df_nutrients, category=None):
     """
     This function evaluates all the nutrients eaten in a day by category
 
     Parameters:
         df_nutrients (pd.DataFrame): DataFrame with all the food eaten and nutrients in a given diary entry scaled accordingly
+        category (str): Category of interest. If None, all categories are returned
 
     Returns:
-
+        pd.DataFrame: DataFrame with all categories of nutrients summed up
+        (or if category is passed)
+        float: sum of nutrients in a specific category
     """
 
     # Sum of each category for the whole day
     df_total = df_nutrients.sum(axis=0)
+
+    if category: 
+        return df_total[category]
+    else:
+        return df_total
+
+    
+def plot_pie(df_total, date, ax=None):
+    """ 
+    Plot a pie chart with the broken down categories and their percentages for a specific day.
+
+    Parameters:
+        df_total (pd.DataFrame): DataFrame with all categories of nutrients summed up
+        date (str): Day of the diary entry
+        ax (matplotlib.Axis): 
+
+
+    Returns:
+        None
+    """
+
     calories = df_total["Calories"]
     total_fats = df_total["Total_fats"]
     saturated_fats = df_total["Saturated_fats"]
@@ -252,22 +302,14 @@ def sum_up_day(df_nutrients):
     other_carbs = total_carbs - dietary_fibers - sugars
     proteins = df_total["Proteins"]
 
-    # Ratios of calories into fat, carbs, prot
-    plot_pie(
-        np.array(
+    values = np.array(
             [
                 [dietary_fibers, sugars, other_carbs],
                 [saturated_fats, other_fats, 0],
                 [proteins, 0, 0],
             ]
-        ),
-        calories,
-    )
+        )
 
-
-def plot_pie(values, calories):
-    """ """
-    fig, ax = plt.subplots()
     size = 0.3
     # Names for the groups and subgroups
     group_names = ["Carbs", "Fats", "Protein"]
@@ -304,8 +346,9 @@ def plot_pie(values, calories):
         elif i in [6, 7, 8]:
             total = values.sum(axis=1)[2]
 
-        if values.flatten()[i] > 0:
-            inner_labels.append(f"{name}\n{100 * values.flatten()[i]/total:.1f}%")
+        percent_ = 100 * values.flatten()[i] / total
+        if percent_ > 0 and percent_ < 99.9:
+            inner_labels.append(f"{name}\n{percent_:.1f}%")
         else:
             inner_labels.append("")
 
@@ -322,8 +365,46 @@ def plot_pie(values, calories):
     for text in texts:
         text.set_fontsize(8)
 
-    ax.set(aspect="equal", title=f"{int(calories)} kcal")
-    plt.show()
+    #ax.set(aspect="equal", title=f"{date}\n{int(calories)} kcal")
+    ax.text(-0.2, 0, f"{date}\n {int(calories)} kcal")
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+def generate_dates(start=None, end=None, year=None, month=None):
+    date_format = "%Y-%m-%d"
+    dates = []
+
+    if year and not month:
+        start_date = datetime.datetime(year, 1, 1)
+        end_date = start_date + relativedelta(years=1, days=-1)
+    elif year and month:
+        start_date = datetime.datetime(year, month, 1)
+        end_date = start_date + relativedelta(months=1, days=-1)
+    else:
+        start_date = datetime.datetime.strptime(start, date_format)
+        end_date = datetime.datetime.strptime(end, date_format)
+    
+    current_date = start_date
+    while current_date <= end_date:
+        dates.append(current_date.strftime(date_format))
+        current_date += datetime.timedelta(days=1)
+    
+    return dates
+
+
 
 
 # pie chart?
