@@ -24,6 +24,43 @@ def save_df(df, file_path=None):
     df.to_csv(file_path, index=False)
 
 
+def generate_dates(start=None, end=None, year=None, month=None):
+    """
+    Generates a list of dates in the format yyyy-mm-dd between start and end. If year and not month is passed instead, all dates for that year are generated. Similarly if both year and month are passed, all dates in that month are generated
+
+    Parameters:
+        start (str): First date to consider, inclusive. Format: 'yyyy-mm-dd'
+        end (str): Last date to consider, inclusive. Format: 'yyyy-mm-dd'
+        year (int): Year of interest. Format: 2024
+        month (int): Month of the year. Format: 11
+
+    Returns:
+        list: Contains all generated dates as strings
+    """
+    date_format = "%Y-%m-%d"
+    dates = []
+
+    # Only year is specified
+    if year and not month:
+        start_date = datetime.datetime(year, 1, 1)
+        end_date = start_date + relativedelta(years=1, days=-1)
+    # Year and month are both specified
+    elif year and month:
+        start_date = datetime.datetime(year, month, 1)
+        end_date = start_date + relativedelta(months=1, days=-1)
+    # Start and end are both specified
+    else:
+        start_date = datetime.datetime.strptime(start, date_format)
+        end_date = datetime.datetime.strptime(end, date_format)
+
+    current_date = start_date
+    while current_date <= end_date:
+        dates.append(current_date.strftime(date_format))
+        current_date += datetime.timedelta(days=1)
+
+    return dates
+
+
 def generate_new_day(date=None, path=None):
     """
     This function creates a new .txt file with the right template in the diary folder with the right template based on today's date
@@ -98,7 +135,7 @@ def diary_entry_to_df(file_name):
         str: Date of the diary entry
     """
     # Extract date of diary entry
-    date = file_name.split('/')[-1].split('.txt')[0]
+    date = file_name.split("/")[-1].split(".txt")[0]
 
     # Initialize an empty list to hold the entries
     entries = []
@@ -181,8 +218,7 @@ def nutrients_to_df(df_diary, df_food, verbose=True):
         "Scaling": None,
     }
 
-
-    track_ = [[],[],[],[], []]
+    track_ = [[], [], [], [], []]
 
     # Loop over eaten food as reported into the diary
     for i in range(df_diary.shape[0]):
@@ -192,15 +228,15 @@ def nutrients_to_df(df_diary, df_food, verbose=True):
         eaten_name = str(df_diary.loc[i]["Name"])
         eaten_meal = str(df_diary.loc[i]["Meal"])
 
-        if eaten_meal == 'breakfast':
+        if eaten_meal == "breakfast":
             track_[0].append(eaten_name)
-        elif eaten_meal == 'lunch':
+        elif eaten_meal == "lunch":
             track_[1].append(eaten_name)
-        elif eaten_meal == 'snack':
+        elif eaten_meal == "snack":
             track_[2].append(eaten_name)
-        elif eaten_meal == 'dinner':
+        elif eaten_meal == "dinner":
             track_[3].append(eaten_name)
-        else: 
+        else:
             track_[4].append(eaten_name)
 
         # print(eaten_size, eaten_unit, eaten_name, eaten_meal)
@@ -241,7 +277,6 @@ def nutrients_to_df(df_diary, df_food, verbose=True):
         # Append to the output database
         df_nutrients.loc[i] = dict_nutrients
 
-
     if verbose:
         print(f"Breakfast: {', '.join([x for x in track_[0]])}")
         print(f"Lunch: {', '.join([x for x in track_[1]])}")
@@ -270,20 +305,20 @@ def sum_up_day(df_nutrients, category=None):
     # Sum of each category for the whole day
     df_total = df_nutrients.sum(axis=0)
 
-    if category: 
+    if category:
         return df_total[category]
     else:
         return df_total
 
-    
+
 def plot_pie(df_total, date, ax=None):
-    """ 
+    """
     Plot a pie chart with the broken down categories and their percentages for a specific day.
 
     Parameters:
         df_total (pd.DataFrame): DataFrame with all categories of nutrients summed up
         date (str): Day of the diary entry
-        ax (matplotlib.Axis): 
+        ax (matplotlib.Axis):
 
 
     Returns:
@@ -303,12 +338,12 @@ def plot_pie(df_total, date, ax=None):
     proteins = df_total["Proteins"]
 
     values = np.array(
-            [
-                [dietary_fibers, sugars, other_carbs],
-                [saturated_fats, other_fats, 0],
-                [proteins, 0, 0],
-            ]
-        )
+        [
+            [dietary_fibers, sugars, other_carbs],
+            [saturated_fats, other_fats, 0],
+            [proteins, 0, 0],
+        ]
+    )
 
     size = 0.3
     # Names for the groups and subgroups
@@ -365,96 +400,13 @@ def plot_pie(df_total, date, ax=None):
     for text in texts:
         text.set_fontsize(8)
 
-    #ax.set(aspect="equal", title=f"{date}\n{int(calories)} kcal")
-    ax.text(-0.2, 0, f"{date}\n {int(calories)} kcal")
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-def generate_dates(start=None, end=None, year=None, month=None):
-    date_format = "%Y-%m-%d"
-    dates = []
-
-    if year and not month:
-        start_date = datetime.datetime(year, 1, 1)
-        end_date = start_date + relativedelta(years=1, days=-1)
-    elif year and month:
-        start_date = datetime.datetime(year, month, 1)
-        end_date = start_date + relativedelta(months=1, days=-1)
-    else:
-        start_date = datetime.datetime.strptime(start, date_format)
-        end_date = datetime.datetime.strptime(end, date_format)
-    
-    current_date = start_date
-    while current_date <= end_date:
-        dates.append(current_date.strftime(date_format))
-        current_date += datetime.timedelta(days=1)
-    
-    return dates
-
-
-
-
-# pie chart?
-# pick a date and show nutritional details
-# Sum of each category for each meal of day
-
-
-def save_entry_to_database(file_path, entry, category):
-    # Read the existing data from the file
-    with open(file_path, "r") as file:
-        food_database = json.load(file)
-    # Add a new entry to the dictionary
-    food_database[entry] = category
-    # Write the updated dictionary back to the file
-    with open(file_path, "w") as file:
-        json.dump(food_database, file, indent=4)  # 'indent=4' for pretty-printing
-    print(f">_ Adding {entry}:{category} to the dictionary!")
-
-
-def calculate_values(df, food):
-    value = food.split()[0]
-    unit = food.split()[1]
-    name = " ".join(food.split()[2:])
-
-    value = float(value)
-    unit = unit.lower()
-    name = name.lower()
-
-    if unit in ["unit", "tbs", "scoop"]:
-        size = float(df.loc[df["Name"] == name, "Size"].values[0])
-    else:
-        size = float(df.loc[df["Name"] == name, "Size_g"].values[0])
-
-    cal = df.loc[df["Name"] == name, "Calories"].values[0]
-    fat = df.loc[df["Name"] == name, "Total Fat"].values[0]
-    carb = df.loc[df["Name"] == name, "Total Carbohydrate"].values[0]
-    prot = df.loc[df["Name"] == name, "Protein"].values[0]
-
-    scaling = value / size
-
-    def scale_num(num):
-        return num * scaling
-
-    return scale_num(cal), scale_num(fat), scale_num(carb), scale_num(prot)
-
-
-dictionary_path = "/mnt/c/Users/scana/Dropbox/FoodProject/food_dictionary.json"
-
-
-def load_food_dictionary(file_path=dictionary_path):
-    with open(file_path, "r") as file:
-        food_dictionary = json.load(file)
-    return food_dictionary
+    # ax.set(aspect="equal", title=f"{date}\n{int(calories)} kcal")
+    ax.text(
+        0.4,
+        0.45,
+        f"{date}\n {int(calories)} kcal",
+        va="bottom",
+        ha="left",
+        transform=ax.transAxes,
+        color="black",
+    )
