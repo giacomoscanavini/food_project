@@ -170,6 +170,43 @@ def diary_entry_to_df(file_name):
     return df_diary, date
 
 
+def recipe_to_df(recipe):
+    """
+    Parses food entries from a text file into a pandas.DataFrame.
+
+    The text file is expected to have a date on the first line, followed by meal sections
+    (e.g., breakfast, lunch, snack, dinner, night) and food entries under each section.
+    Each food entry is expected to be in the format: "size unit name".
+
+    Parameters:
+        file_name (str): The name of the text file to be parsed.
+
+    Returns:
+        pd.DataFrame: A DataFrame containing columns for Size, Unit, Name, and Meal.
+        str: Date of the diary entry
+    """
+    # Initialize an empty list to hold the entries
+    entries = []
+    current_meal = ""
+    lines = recipe.splitlines()
+    # Read each line in lines
+    for line in lines:
+        line = line.strip()
+
+        # Split the line into parts and ensure it has at least three components
+        parts = line.split()
+        if len(parts) >= 3:
+            size = parts[0]  # Size of the food item
+            unit = parts[1]  # Unit of measurement
+            name = " ".join(parts[2:])  # Name of the food item
+            # Append the entry with meal information to the entries list
+            entries.append([size, unit, name, current_meal])
+
+    # Create a DataFrame from the list of entries with specified column names
+    df_recipe = pd.DataFrame(entries, columns=["Size", "Unit", "Name", "Meal"])
+    return df_recipe
+
+
 def nutrients_to_df(df_diary, df_food, verbose=True):
     """
     This function generates a pandas.DataFrame with all nutrients eaten given a starting pandas.DataFrame of food and quantity eaten
@@ -309,6 +346,22 @@ def sum_up_day(df_nutrients, category=None):
         return df_total[category]
     else:
         return df_total
+
+
+def recipe_details(recipe, df_food):
+    """
+    Calculates the total nutrients in a recipe, provided all food is listed in the database.
+
+    Parameters:
+        recipe (str): Multiline recipe in a similar format to the diary entries
+        df_food (pd.DataFrame): Food database
+
+    Returns:
+        pd.DataFrame: Details regarding the input recipe
+    """
+    df_recipe = recipe_to_df(recipe)
+    df_nutrients = nutrients_to_df(df_recipe, df_food, verbose=False)
+    return sum_up_day(df_nutrients, category=None)
 
 
 def plot_pie(df_total, date, ax=None):

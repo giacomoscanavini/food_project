@@ -23,7 +23,7 @@ dinner
 1 unit pita_white
 night
 0.29 unit egg_white
-0.11 cup sugar_white
+22 g sugar_white
 0.07 tbs vanilla_extract
-0.29 cup flour_almond
-9.07 g almond
+32.5 g flour_almond
+9.07 g almond_salted

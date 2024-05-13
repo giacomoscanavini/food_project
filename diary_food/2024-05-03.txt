@@ -15,7 +15,7 @@ snack
 dinner
 48 g parmigiano
 151 g pasta_lasagna
-132 g beef_ground_96/4
+132 g beef_ground_96_4
 0.6 unit egg
 13 g bread_crumbs
 400 g tomato_san_marzano

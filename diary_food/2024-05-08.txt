@@ -1,9 +1,10 @@
 2024-05-08
 breakfast
 120 g milk_zero
+55 g cereal_heritage_flakes
 50 g blueberry
 105 g cottage_cheese_skim
-1 unit date
+10 g date
 15 g chocolate_milk
 15 g pistachio
 lunch
@@ -18,7 +19,7 @@ dinner
 200 g beef_flank
 7 unit rice_cake_brown
 172 g carrot
-165 g cottage_cheese_zero
+165 g cottage_cheese_skim
 3 slice cheese_swiss_skim
 night
 113 g greek_yogurt_zero

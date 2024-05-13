@@ -2,7 +2,7 @@ Name,Size,Size_unit,Size_g,Calories,Total_fats,Saturated_fats,Cholesterol,Sodium
 almond_butter,2,tbs,32,200,18,1.5,0,0,6,3,1,7
 almond_salted,,g,45,270,24,2,0,180,9,6,2,9
 anchovies_cento,6,unit,15,35,2,0,15,960,0,0,0,4
-apple,,g,100,52,0.2,0,0,1,14,2.4,10,0.3
+apple_green,,g,100,52,0.2,0,0,1,14,2.4,10,0.3
 artichoke_frozen,,g,85,35,0,0,0,20,7,4,0.8,2
 arugula,,g,85,20,0.5,0,0,25,3,1,2,2
 asparagus,,g,100,20,0.1,0,0,2,3.9,2,1.9,2.2
@@ -84,3 +84,13 @@ vanilla_extract,1,tbs,13,38,0,0,0,1,1.6,0,1.6,0
 walnut,,g,100,654,65,6,0,2,14,7,2.6,15
 wine_red,1,glass,145,125,0,0,0,6,3.8,0,0.9,0.1
 wrap_spicy_lentil,2,unit,284,440,7,0,0,1240,79,5,5,13
+farro,0.25,cup,45,170,1,0,0,0,34,2,0,5
+zucchini,1,unit,196,33,0.6,0.2,0,16,6,2,4.9,2.4
+pasta,,g,56,200,0.5,0,0,0,40,2,1,7
+swordfish,,g,100,172,8,1.9,78,97,0,0,0,23
+olive,,g,100,115,11,1.4,0,735,6,3.2,0,0.8
+caper,,g,28,10,0,0,0,630,2,0.2,0,0.2
+flour_whole,,g,30,110,0,0,0,0,21,4,0,4
+langostine,,g,85,60,0.5,0,95,105,0,0,0,15
+sauce_aioli,1,tbs,5,1,0,0,0,50,0,0,0,0
+paella_frozen,1,cup,140,170,3.5,1,40,340,25,1,1,9
