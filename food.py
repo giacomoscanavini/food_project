@@ -61,13 +61,13 @@ def generate_dates(start=None, end=None, year=None, month=None):
     return dates
 
 
-def generate_new_day(date=None, path=None):
+def generate_new_day(path=None, date=None):
     """
     This function creates a new .txt file with the right template in the diary folder with the right template based on today's date
 
     Parameters:
-        date (str): Date to use for the diary entry with format yyyy-mm-dd
         path (str): Path to the folder with the diary entries
+        date (str): Date to use for the diary entry with format yyyy-mm-dd
 
     Returns:
         None
@@ -361,7 +361,7 @@ def recipe_details(recipe, df_food):
     """
     df_recipe = recipe_to_df(recipe)
     df_nutrients = nutrients_to_df(df_recipe, df_food, verbose=False)
-    return sum_up_day(df_nutrients, category=None)
+    return sum_up_day(df_nutrients, category=None)[1:-3]
 
 
 def plot_pie(df_total, date, ax=None):
@@ -463,3 +463,12 @@ def plot_pie(df_total, date, ax=None):
         transform=ax.transAxes,
         color="black",
     )
+
+
+"""
+TO DO: 
+    - A function that takes in input a list of generated dates, looks for the diary entries and sums up all those days returning a df for each day
+    - A funciton that plots a specific category for all those days to sum up  a whole period, maybe mean of that parameter displayed as vertical line among horizontal bars 
+    - Save the plot and updates based on month
+
+"""
