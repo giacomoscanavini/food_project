@@ -390,11 +390,15 @@ def plot_pie(df_total, date, ax=None):
     other_carbs = total_carbs - dietary_fibers - sugars
     proteins = df_total["Proteins"]
 
+    cal_per_fat = 7
+    cal_per_prot = 4
+    cal_per_carb = 4
+
     values = np.array(
         [
-            [dietary_fibers, sugars, other_carbs],
-            [saturated_fats, other_fats, 0],
-            [proteins, 0, 0],
+            [dietary_fibers * cal_per_carb, sugars * cal_per_carb, other_carbs * cal_per_carb],
+            [saturated_fats * cal_per_fat, other_fats * cal_per_fat, 0],
+            [proteins * cal_per_prot, 0, 0],
         ]
     )
 
@@ -463,6 +467,15 @@ def plot_pie(df_total, date, ax=None):
         transform=ax.transAxes,
         color="black",
     )
+
+
+def plot_pie_given_day(database_path, diary_entry_path, ax):
+    df_food = load_food_database(database_path)
+    df_diary, date = diary_entry_to_df(file_name=diary_entry_path)
+    df_nutrients = nutrients_to_df(df_diary, df_food, verbose=True)
+    df_total = sum_up_day(df_nutrients, category=None)
+    plot_pie(df_total, date, ax=ax)
+
 
 
 """

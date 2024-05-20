@@ -17,7 +17,7 @@ snack
 30 g apple
 dinner
 270 g tomato_san_marzano
-206 g langostine
+206 g langostino
 96 g flour_whole
 0.9 unit egg
 100 g parmigiano
