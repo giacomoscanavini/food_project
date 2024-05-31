@@ -10,5 +10,15 @@ snack
 80 g blueberry
 120 g greek_yogurt_zero
 dinner
-
+211 g tomato
+173 g cucumber
+51 g lettuce
+104 g carrot
+82 g greek_yogurt_zero
+2 slice cheese_swiss_skim
+1 unit pita_whole
+4 slice turkey_breast
+96 g milk_zero
+50 g cereal_heritage_flakes
 night
+1.5 scoop protein_powder_ascent_chocolate
