@@ -21,7 +21,7 @@ dinner
 25 g olive
 3 tbs oil_olive
 1 tbs sauce_mayonnaise
-100 g artichoke frozen
+100 g artichoke_frozen
 night
 0.8 slice cheesecake
 1.5 scoop protein_powder_ascent_chocolate

@@ -4,13 +4,13 @@ breakfast
 40 g cereal_heritage_flakes
 lunch
 1 unit pita_whole
-1 unit egg_boiled
+1 unit egg_hard_boiled
 2 slice cheese_swiss_skim
 4 slice turkey_breast
 20 g arugula
 snack
 100 g greek_yogurt_zero
-1 unit egg_boiled
+1 unit egg_hard_boiled
 1 glass beer
 50 g potato_fries
 1 tbs sauce_mayonnaise

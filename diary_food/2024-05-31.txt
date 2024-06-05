@@ -14,7 +14,10 @@ snack
 50 g greek_yogurt_zero
 1 unit pita_whole
 3 slice pastrami
-1 glass beer
 dinner
-
+1 unit wrap_spicy_lentil
+3 slice pastrami
+1 glass beer
 night
+1.5 scoop protein_powder_ascent_chocolate
+120 g greek_yogurt_zero

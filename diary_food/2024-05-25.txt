@@ -5,7 +5,7 @@ breakfast
 99 g mango_frozen
 lunch
 200 g zucchini
-20 g ricotta
+20 g ricotta_skim
 134 g langostino
 233 g gnocchi
 snack
@@ -13,7 +13,7 @@ snack
 146 g cottage_cheese_skim
 dinner
 171 g tomato
-1/2 unit lime
+0.5 unit lime
 60 g lettuce
 1 tbs oil_olive
 130 g chicken_breast

@@ -4,7 +4,7 @@ breakfast
 40 g cereal_heritage_flakes
 lunch
 2 unit pita_whole
-40 g red_pepper
+40 g pepper_red
 2 tbs oil_olive
 120 g pastrami
 2 tbs sauce_aioli

@@ -14,7 +14,7 @@ lunch
 60 g potato_chip
 snack
 1 glass sangria
-30 g apple
+30 g apple_green
 dinner
 270 g tomato_san_marzano
 206 g langostino

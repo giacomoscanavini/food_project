@@ -15,7 +15,7 @@ snack
 dinner
 150 g pasta_whole
 273 g beef_flank
-300 g san_marzano
+300 g tomato_san_marzano
 night
 1.5 scoop protein_powder_ascent_chocolate
 80 g mango_frozen
