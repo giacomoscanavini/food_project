@@ -7,7 +7,15 @@ lunch
 360 g milk_zero
 4 unit bao_shrimp
 snack
-
 dinner
-
+180 g pasta_handmade
+48 g langostino
+35 g mushroom
+45 g ricotta_skim
+1 unit anchovies_cento
+0.5 glass wine_red
+200 g onion_yellow
 night
+1.5 scoop protein_powder_ascent_chocolate
+135 g greek_yogurt_zero
+40 g banana
