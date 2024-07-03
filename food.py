@@ -404,7 +404,7 @@ def plot_pie(df_total, date, ax=None):
 
     size = 0.3
     # Names for the groups and subgroups
-    group_names = [f"Carbs ({int(dietary_fibers+other_carbs)},{int(sugars)})", f"Fats ({int(total_fats)})", f"Protein ({int(proteins)})"]
+    group_names = [f"Carbs ({int(dietary_fibers+other_carbs)}+{int(sugars)})", f"Fats ({int(total_fats)})", f"Protein ({int(proteins)})"]
     subgroup_names = ["Fiber", "Sugar", "Other", "Saturated", "Other", "", "", "", ""]
     cmap = plt.colormaps["tab20c"]
     outer_colors = cmap(np.arange(3) * 4)
